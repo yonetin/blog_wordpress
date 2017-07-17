@@ -1,0 +1,26 @@
+version: '2'
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    #   ports:
+    #  - "9000:80"
+    depends_on:
+      - db
+    environment:
+      VIRTUAL_HOST: "wordpress.local"
+      WORDPRESS_DB_HOST: "db:3306"
+      VIRTUAL_PORT: 7000
+    env_file: .env
+
+  db:
+    image: mysql:latest
+    env_file: .env
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
+    driver: local
+
+
